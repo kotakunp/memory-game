@@ -14,15 +14,17 @@ body {
 
 .game-board {
     display: grid;
-    grid-template-columns: repeat(4, 100px); /* 4 columns, each 100px wide */
-    grid-template-rows: repeat(4, 100px); /* 4 rows, each 100px tall */
-    gap: 10px; /* gap between cards */
+    grid-template-columns: repeat(4, 100px); 
+    grid-template-rows: repeat(4, 100px); 
+    gap: 10px; 
 }
 
 .cards {
     width: 100px;
     height: 100px;
     position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
 }
 
 .front, .back {
@@ -33,14 +35,34 @@ body {
     left: 0;
     object-fit: cover;
     display: block;
-    backface-visibility: hidden;
-    transform: rotateY(0deg);
+    transition: opacity 0.3s ease-in-out;
 }
 
 .front {
-    display: block;
+    display: none;
+    opacity: 0;
+    transform: rotateY(180deg); 
 }
 
 .back {
-    display: none;
+    display: block;
+    opacity: 1;
+    transform: rotateY(0deg); 
+}
+
+.cards.flipped {
+    transform: rotateY(180deg);
+}
+
+.cards.flipped .front {
+    display: block;
+    opacity: 1;
+    z-index: 2; 
+    transform: rotateY(0deg);
+}
+
+.cards.flipped .back {
+    display: none; 
+    opacity: 0;
+    z-index: 1;
 }
