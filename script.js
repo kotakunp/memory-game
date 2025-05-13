@@ -72,8 +72,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (matchedPairs === totalPairs) {
             clearInterval(timerInterval);
+
+            const minutes = Math.floor(seconds / 60);
+            const displaySeconds = seconds % 60;
+            const formattedTime = `${minutes}:${displaySeconds < 10 ? '0' : ''}${displaySeconds}`;
+
             setTimeout(() => {
-                alert('Goodjob bro, but not that impressive tho lol');
+                alert(`Good job bro, you finished in ${formattedTime}`);
             }, 500);
         }
     }
