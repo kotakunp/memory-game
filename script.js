@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let seconds = 0;
     let timerStarted = false;
 
+    let moveCount = 0;
+
     function updateTimer() {
         const minutes = Math.floor(seconds / 60);
         const displaySeconds = seconds % 60;
@@ -18,6 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.timer').textContent = `Timer: ${timeString}`;
 
         seconds++;
+    }
+
+    function updateMove() {
+        moveCount++;
+        const moveString = moveCount;
+        document.querySelector('.move-count').textContent = `Moves: ${moveString}`;
     }
 
     function flipCard() {
@@ -44,8 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
 }
 
-        secondCard = this;
-        lockBoard = true;
+            secondCard = this;
+            lockBoard = true;
+            
+            updateMove();
 
         checkForMatch();
     }
@@ -78,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const formattedTime = `${minutes}:${displaySeconds < 10 ? '0' : ''}${displaySeconds}`;
 
             setTimeout(() => {
-                alert(`Good job bro, you finished in ${formattedTime}`);
+                alert(`Goodjob bro, your final time is ${formattedTime} and ${moveCount} moves`);
             }, 500);
         }
     }
@@ -101,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
             secondBack.style.opacity = '1';
 
             resetBoard();
-        }, 1000);
+        }, 500);
     }
 
     function resetBoard() {
