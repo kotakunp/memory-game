@@ -7,6 +7,19 @@ document.addEventListener('DOMContentLoaded', () => {
     let matchedPairs = 0;
     const totalPairs = cards.length / 2;
 
+    let seconds = 0;
+    let timerStarted = false;
+
+    function updateTimer() {
+        const minutes = Math.floor(seconds / 60);
+        const displaySeconds = seconds % 60;
+        const timeString = `${minutes}:${displaySeconds < 10 ? '0' : ''}${displaySeconds}`;
+        
+        document.querySelector('.timer').textContent = `Timer: ${timeString}`;
+
+        seconds++;
+    }
+
     function flipCard() {
         if (lockBoard) return;
         if (this === firstCard) return;
@@ -20,10 +33,16 @@ document.addEventListener('DOMContentLoaded', () => {
         backImage.style.opacity = '0';
 
         if (!hasFlippedCard) {
+            if (!timerStarted) {
+                timerStarted = true;
+                updateTimer();
+                timerInterval = setInterval(updateTimer, 1000);
+            }
+            
             hasFlippedCard = true;
             firstCard = this;
             return;
-        }
+}
 
         secondCard = this;
         lockBoard = true;
@@ -52,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         resetBoard();
 
         if (matchedPairs === totalPairs) {
+            clearInterval(timerInterval);
             setTimeout(() => {
                 alert('Goodjob bro, but not that impressive tho lol');
             }, 500);
